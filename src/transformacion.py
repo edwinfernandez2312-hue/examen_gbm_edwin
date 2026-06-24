@@ -23,7 +23,7 @@ def transformar_datos(archivo_csv):
 
     return df
 
-# Ejecución (Ejemplo de uso)
+# (Ejemplo de uso)
 if __name__ == "__main__":
     df_procesado = transformar_datos('transacciones_diarias.csv')
     print("Transformación completada con éxito.")
