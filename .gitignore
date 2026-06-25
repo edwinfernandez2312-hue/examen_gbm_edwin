@@ -2,7 +2,7 @@
 .env
 requirements/.env
 
-# 2. Infraestructura: Carpeta del Entorno Virtual (NUNCA se sube)
+# 2. Infraestructura: Carpeta del Entorno Virtual 
 venv/
 
 # 3. Archivos de Python (Compilados locales)
