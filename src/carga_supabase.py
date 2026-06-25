@@ -23,7 +23,7 @@ def subir_datos(df):
     """
     logging.info("Conectando con Supabase e iniciando carga...") 
     
-    # Validación preventiva: si el dataframe está vacío, no hacemos la petición a la base de datos
+    # Validación preventiva: si el dataframe está vacío.
     if df.empty:
         logging.warning("El DataFrame recibido está vacío. Cancelando carga.")
         return None
