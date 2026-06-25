@@ -29,12 +29,33 @@ Para el análisis de anomalías de gasto únicamente deben considerarse transacc
 El flujo sigue un modelo **ETL (Extract, Transform, Load)** robusto:
 
 `CSV (Raw)` ➔ `Pandas (Transform)` ➔ `Supabase (Load)` ➔ `SQL (Analysis)`
+"Nota: Por razones de seguridad, las credenciales se gestionan a través de variables de entorno. Se requiere un archivo .env local con SUPABASE_URL y SUPABASE_KEY
+
+3. Gobernanza y Seguridad de Datos (RBAC & RLS)
+Para garantizar la integridad y confidencialidad de la información, hemos implementado una capa de seguridad a nivel de base de datos utilizando dos pilares fundamentales: RBAC (Control de Acceso Basado en Roles) y RLS (Row Level Security).
+
+Jerarquía de Acceso (RBAC)
+Hemos definido tres niveles de privilegios mediante un tipo de dato enumerado (rol_usuario) vinculado a la autenticación de Supabase:
+
+Administrador: Acceso total a la tabla de transacciones.
+
+Analista Senior: Acceso de lectura total para auditorías y reportes complejos.
+
+Analista Junior: Acceso restringido únicamente a transacciones con estado 'aprobada'.
+
+Seguridad a Nivel de Fila (RLS)
+La seguridad no depende de la aplicación, sino del motor de base de datos. Se han habilitado políticas (Policies) en PostgreSQL que actúan como un filtro dinámico:
+
+Al realizar una consulta, la base de datos verifica el auth.uid() del usuario y su rol en la tabla perfiles_usuarios.
+
+Si el usuario es Junior, el sistema oculta automáticamente todas las filas que no estén aprobadas, sin necesidad de modificar el código SQL de la consulta.
 
 ### Tecnologías Utilizadas
 * **Python & Pandas:** Procesamiento eficiente y limpieza de datos (Dataframes).
 * **Supabase (PostgreSQL):** Base de datos relacional en la nube para almacenamiento estructurado.
 * **SQL:** Análisis mediante *Window Functions* y *CTEs* para detección de anomalías.
 * **Apache Airflow:** Orquestador para automatización diaria (11:30 PM) y gestión de dependencias.
+
 Python
 
 Se utilizará Python como lenguaje principal debido a su amplia adopción en proyectos de Ingeniería de Datos. Permite automatizar procesos ETL, integrarse fácilmente con bases de datos y manejar grandes volúmenes de información mediante librerías especializadas.

@@ -1,0 +1,10 @@
+# 1. Seguridad: Credenciales y secretos locales
+.env
+requirements/.env
+
+# 2. Infraestructura: Carpeta del Entorno Virtual (NUNCA se sube)
+venv/
+
+# 3. Archivos de Python (Compilados locales)
+**/__pycache__/
+*.pyc
